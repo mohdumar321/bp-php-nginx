@@ -13,7 +13,8 @@ bash setup-ius.sh
 RUN yum install -y --setopt=tsflags=nodocs --enablerepo=centosplus \
 php56-fpm nginx  
 RUN yum -y install php56w \
-php56w-opcache \ 
+php56w-opcache \
+php56w-common \ 
 php56w-fpm \
 php56w-cli \
 nginx \
@@ -26,7 +27,8 @@ php56w-pdo \
 php56w-pear \
 php56w-xml \
 php56w- soap \
-php56w-fpm-nginx
+php56w-fpm-nginx \
+libaio
 
 RUN yum clean all -y
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
@@ -52,5 +54,28 @@ chmod -R ug+rwx /opt/app-root && \
 #chmod -R a+rwx /opt/app-root
 chmod -R a+rwx /opt/app-root/services.sh
 
+
+# -----------------------------------------------------------------------------
+# Install Oracle drivers
+#
+# Oracle clients need to be downloaded in oracle path
+# -----------------------------------------------------------------------------
+RUN mkdir -p /opt/app-root/etc/oracle/11.2/client64/lib/
+ADD /opt/app-root/etc/conf.d/oracle/libclntsh.so.11.1.gz /opt/app-root/etc/oracle/11.2/client64/lib/
+RUN gunzip /opt/app-root/etc/oracle/11.2/client64/lib/libclntsh.so.11.1.gz
+ADD /opt/app-root/etc/conf.d/oracle/libnnz11.so.gz /opt/app-root/etc/oracle/11.2/client64/lib/
+RUN gunzip /opt/app-root/etc/oracle/11.2/client64/lib/libnnz11.so.gz
+ADD /opt/app-root/etc/conf.d/oracle/libocci.so.11.1.gz /opt/app-root/etc/oracle/11.2/client64/lib/
+RUN gunzip /opt/app-root/etc/oracle/11.2/client64/lib/libocci.so.11.1.gz
+RUN ln -s /opt/app-root/etc/oracle/11.2/client64/lib/libclntsh.so.11.1 /opt/app-root/etc/oracle/11.2/client64/lib/libclntsh.so
+RUN ln -s /opt/app-root/etc/oracle/11.2/client64/lib/libocci.so.11.1 /opt/app-root/etc/oracle/11.2/client64/lib/libocci.so
+RUN echo "/opt/app-root/etc/oracle/11.2/client64/lib" > /etc/ld.so.conf.d/oracle.conf
+RUN ldconfig
+
+ADD /opt/app-root/etc/conf.d/oracle/oci8.so /etc/php-fpm.conf
+RUN echo "extension=oci8.so" > /etc/php-fpm.d/oci8.ini
+
+ADD /opt/app-root/etc/conf.d/oracle/pdo_oci.so /etc/php-fpm.conf
+RUN echo "extension=pdo_oci.so" > /etc/php-fpm.d/pdo_oci.ini
 USER 1001
 CMD $STI_SCRIPTS_PATH/usage
