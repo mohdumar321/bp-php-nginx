@@ -79,23 +79,23 @@ chmod -R a+rwx /opt/app-root/services.sh
 #RUN echo "extension=pdo_oci.so" > /etc/php-fpm.d/pdo_oci.ini
 
 # Oracle instantclient
-ADD opt/app-root/etc/conf.d/oracle/instantclient-basic-linux.x64-11.2.0.4.0.zip /etc/instantclient-basic-linux.x64-11.2.0.4.0.zip
-ADD opt/app-root/etc/conf.d/oracle/instantclient-sdk-linux.x64-11.2.0.4.0.zip /etc/instantclient-sdk-linux.x64-11.2.0.4.0.zip
-ADD opt/app-root/etc/conf.d/oracle/instantclient-sqlplus-linux.x64-11.2.0.4.0.zip /etc/instantclient-sqlplus-linux.x64-11.2.0.4.0.zip
+ADD opt/app-root/etc/conf.d/oracle/instantclient-basic-linux.x64-11.2.0.4.0.zip /usr/local/instantclient-basic-linux.x64-11.2.0.4.0.zip
+ADD opt/app-root/etc/conf.d/oracle/instantclient-sdk-linux.x64-11.2.0.4.0.zip /usr/local/instantclient-sdk-linux.x64-11.2.0.4.0.zip
+ADD opt/app-root/etc/conf.d/oracle/instantclient-sqlplus-linux.x64-11.2.0.4.0.zip /usr/local/instantclient-sqlplus-linux.x64-11.2.0.4.0.zip
 
 RUN yum install -y unzip
-mkdir -p /etc/local /etc/bin
-RUN unzip /etc/instantclient-basic-linux.x64-11.2.0.4.0.zip -d /etc/local
-RUN unzip /etc/instantclient-sdk-linux.x64-11.2.0.4.0.zip -d /etc/local
-RUN unzip /etc/instantclient-sqlplus-linux.x64-11.2.0.4.0.zip -d /etc/local
-RUN ln -s /etc/local/instantclient_11_2 /etc/local/instantclient
-RUN ln -s /etc/local/instantclient/libclntsh.so.11.1 /etc/local/instantclient/libclntsh.so
-RUN ln -s /etc/local/instantclient/sqlplus /etc/bin/sqlplus
+#mkdir -p /etc/local /etc/bin
+RUN unzip /usr/local/instantclient-basic-linux.x64-11.2.0.4.0.zip -d /usr/local
+RUN unzip /usr/local/instantclient-sdk-linux.x64-11.2.0.4.0.zip -d /usr/local
+RUN unzip /usr/local/instantclient-sqlplus-linux.x64-11.2.0.4.0.zip -d /usr/local
+RUN ln -s /usr/local/instantclient_11_2 /usr/local/instantclient
+RUN ln -s /usr/local/instantclient/libclntsh.so.11.1 /usr/local/instantclient/libclntsh.so
+RUN ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
 
-RUN yum install libaio-dev -y
-RUN echo 'instantclient,/etc/local/instantclient' | pecl install -f oci8-2.0.11
 
-ADD opt/app-root/etc/conf.d/php/oci8.ini /opt/app-root/etc/php56/cli/conf.d/30-oci8.ini
+RUN echo 'instantclient,/usr/local/instantclient' | pecl install -f oci8-2.0.11
+
+ADD opt/app-root/etc/conf.d/php/oci8.ini /etc/php5/cli/conf.d/30-oci8.ini
 
 RUN yum clean all -y
 USER 1001
