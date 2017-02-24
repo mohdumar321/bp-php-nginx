@@ -95,7 +95,7 @@ RUN ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
 
 RUN echo 'instantclient,/usr/local/instantclient' | pecl install -f oci8-2.0.11
 
-RUN cp /opt/app-root/etc/conf.d/php/oci8.ini /etc/php5/cli/conf.d/30-oci8.ini
+RUN echo 'extension=oci8.so' > /etc/php.ini
 
 RUN yum clean all -y
 USER 1001
