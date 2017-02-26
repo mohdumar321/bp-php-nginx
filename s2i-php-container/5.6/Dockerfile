@@ -7,6 +7,7 @@ ENV PHP_VERSION=5.6 \
 PATH=$PATH:/opt/rh/rh-php56/root/usr/bin
 RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+RUN rpm -Uvh https://mirror.webtatic.com/yum/el6/latest.rpm
 
 RUN curl 'https://setup.ius.io/' -o setup-ius.sh && \
 bash setup-ius.sh
@@ -15,6 +16,8 @@ php56-fpm nginx
 RUN yum -y install php56w \
 php56w-opcache \
 php56w-common \ 
+php56w-json \
+php56w-dba \
 php56w-fpm \
 php56w-cli \
 nginx \
@@ -22,8 +25,10 @@ php56w-devel \
 php56w-gd \
 php56w-mbstring \
 php56w-ldap \
+php56w-odbc \
 php56w-intl \
 php56w-pdo \
+php56w-phpdbg \
 php56w-pear \
 php56w-xml \
 php56w- soap \
