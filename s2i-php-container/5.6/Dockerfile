@@ -16,6 +16,7 @@ bash setup-ius.sh
 RUN yum install -y --setopt=tsflags=nodocs --enablerepo=centosplus \
 php56-fpm nginx  
 RUN yum -y install php56w \
+php-adodb \
 php56w-opcache \
 php56w-common \ 
 php56w-json \
