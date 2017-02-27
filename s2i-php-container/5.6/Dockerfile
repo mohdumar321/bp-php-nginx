@@ -7,7 +7,7 @@ ENV PHP_VERSION=5.6 \
 PATH=$PATH:/opt/rh/rh-php56/root/usr/bin
 RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
-RUN rpm -Uvh https://mirror.webtatic.com/yum/el6/latest.rpm
+
 echo "before";
 RUN rpm -Ivh php-adodb-ext-5.0.4-1.el6.x86_64.rpm
 echo "after";
