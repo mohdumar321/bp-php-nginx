@@ -1,17 +1,14 @@
 FROM centos/s2i-base-centos7
 
 
-MAINTAINER sonal nikam
+MAINTAINER atos india private ltd
 EXPOSE 8000
 ENV PHP_VERSION=5.6 \
 PATH=$PATH:/opt/rh/rh-php56/root/usr/bin
 RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 
-#echo "before";
-#RUN rpm -Ivh php-adodb-ext-5.0.4-1.el6.x86_64.rpm
-RUN rpm -Ivh php-adodb-4.81-1.el6.rf.noarch 
-#echo "after";
+
 RUN curl 'https://setup.ius.io/' -o setup-ius.sh && \
 bash setup-ius.sh
 RUN yum install -y --setopt=tsflags=nodocs --enablerepo=centosplus \
