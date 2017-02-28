@@ -1,7 +1,7 @@
 FROM centos/s2i-base-centos7
 
 
-MAINTAINER Milan Sulc <sulcmil@gmail.com>
+MAINTAINER sonal nikam
 EXPOSE 8000
 ENV PHP_VERSION=5.6 \
 PATH=$PATH:/opt/rh/rh-php56/root/usr/bin
