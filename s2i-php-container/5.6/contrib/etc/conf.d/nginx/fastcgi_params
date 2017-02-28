@@ -22,3 +22,28 @@ fastcgi_param  SERVER_NAME        $server_name;
 
 # PHP only, required if PHP was built with --enable-force-cgi-redirect
 fastcgi_param  REDIRECT_STATUS    200;
+
+
+fastcgi_param  SERVER_TYPE        int;
+fastcgi_param  ROSI_APPL          $schema;
+#fastcgi_param TNS_ADMIN          /home/vcap/app/php/etc;
+#fastcgi_param  RIS_LOG            /opt/app-root/src/log;
+fastcgi_param  ROSI_HOME          /opt/app-root/src/rosi-sol;
+fastcgi_param  ROSI_CONF_DIR      /opt/app-root/src/rosi-sol/configure;
+fastcgi_param  ROSI_SESSION       $cookie_phpsessid;
+fastcgi_param  ROSI_CODEROOT      /opt/app-root/src/rosi-sol;
+fastcgi_param  ROSI_CODEWWWROOT   /opt/app-root/src/rosi-sol/wwwroot;
+fastcgi_param  SERVER_NAME        http://bpfinalimage19-appbponopenshift.44fs.preview.openshiftapps.com;
+fastcgi_param  ROSI_URL           http://bpfinalimage19-appbponopenshift.44fs.preview.openshiftapps.com;
+
+
+
+fastcgi_param  NLS_LANG           GERMAN_GERMANY.WE8ISO8859P1;
+fastcgi_param  NLS_NCHAR           WE8ISO8859P1;
+fastcgi_param  NLS_NUMERIC_CHARACTERS           .;
+fastcgi_param  NLS_DATE_FORMAT          "YYYY-MM-DD HH24:MI:SS";
+fastcgi_param  NLS_DATE_LANGUAGE           AMERICAN;
+
+
+fastcgi_buffers 16 16k;
+fastcgi_buffer_size 32k; 
