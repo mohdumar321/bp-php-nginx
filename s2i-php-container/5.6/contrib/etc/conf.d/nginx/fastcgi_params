@@ -25,12 +25,12 @@ fastcgi_param  REDIRECT_STATUS    200;
 
 
 fastcgi_param  SERVER_TYPE        int;
-fastcgi_param  ROSI_APPL          $schema;
+#fastcgi_param  ROSI_APPL          $schema;
 #fastcgi_param TNS_ADMIN          /home/vcap/app/php/etc;
 #fastcgi_param  RIS_LOG            /opt/app-root/src/log;
 fastcgi_param  ROSI_HOME          /opt/app-root/src/rosi-sol;
 fastcgi_param  ROSI_CONF_DIR      /opt/app-root/src/rosi-sol/configure;
-fastcgi_param  ROSI_SESSION       $cookie_phpsessid;
+#fastcgi_param  ROSI_SESSION       $cookie_phpsessid;
 fastcgi_param  ROSI_CODEROOT      /opt/app-root/src/rosi-sol;
 fastcgi_param  ROSI_CODEWWWROOT   /opt/app-root/src/rosi-sol/wwwroot;
 fastcgi_param  SERVER_NAME        http://bpfinalimage19-appbponopenshift.44fs.preview.openshiftapps.com;
