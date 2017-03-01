@@ -33,8 +33,8 @@ fastcgi_param  ROSI_CONF_DIR      /opt/app-root/src/rosi-sol/configure;
 #fastcgi_param  ROSI_SESSION       $cookie_phpsessid;
 fastcgi_param  ROSI_CODEROOT      /opt/app-root/src/rosi-sol;
 fastcgi_param  ROSI_CODEWWWROOT   /opt/app-root/src/rosi-sol/wwwroot;
-fastcgi_param  SERVER_NAME        http://bpfinalimage19-appbponopenshift.44fs.preview.openshiftapps.com;
-fastcgi_param  ROSI_URL           http://bpfinalimage19-appbponopenshift.44fs.preview.openshiftapps.com;
+fastcgi_param  SERVER_NAME        http://bpfinalimage2-aappbponopenshift.44fs.preview.openshiftapps.com;
+fastcgi_param  ROSI_URL           http://bpfinalimage2-aappbponopenshift.44fs.preview.openshiftapps.com;
 
 
 
