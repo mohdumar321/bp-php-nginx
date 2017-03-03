@@ -1,7 +1,7 @@
 FROM centos/s2i-base-centos7
 
 
-MAINTAINER atos india private ltd
+MAINTAINER Umar Mubeen
 EXPOSE 8000
 ENV PHP_VERSION=5.6 \
 PATH=$PATH:/opt/rh/rh-php56/root/usr/bin
@@ -15,6 +15,7 @@ RUN yum install -y --setopt=tsflags=nodocs --enablerepo=centosplus \
 php56-fpm nginx  
 RUN yum -y install php56w \
 php-adodb \
+php56w-pecl-redis-3.1.0 \
 php56w-opcache \
 php56w-common \ 
 php56w-json \
@@ -42,6 +43,16 @@ COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 COPY ./contrib/ /opt/app-root
 RUN cp /opt/app-root/etc/conf.d/php-fpm/pool.conf /etc/php-fpm.d/www.conf
 RUN cp /opt/app-root/etc/conf.d/php-fpm/fpm.conf /etc/php-fpm.conf
+RUN cp /opt/app-root/etc/conf.d/php-fpm/pools/rosi.conf /etc/php-fpm.d/rosi.conf
+RUN cp /opt/app-root/etc/conf.d/php-fpm/pools/rosi-webservice.conf /etc/php-fpm.d/rosi-webservice.conf
+RUN cp /opt/app-root/etc/conf.d/php-fpm/pools/cacti.conf /etc/php-fpm.d/cacti.conf
+RUN cp /opt/app-root/etc/conf.d/php-fpm/pools/lm.conf /etc/php-fpm.d/lm.conf
+
+
+RUN cp /opt/app-root/etc/conf.d/php-fpm/php.ini /etc/php.d/php.ini
+RUN cp /opt/app-root/etc/conf.d/php-fpm/php-batch.ini /etc/php.d/php-batch.ini
+RUN cp /opt/app-root/etc/conf.d/php/oci8.ini /etc/php.d/30-oci8.ini
+RUN mkdir -p /usr/local/lib/php/extensions/no-debug-non-zts-20131226
 RUN mkdir /tmp/sessions && \
 mkdir -p /var/lib/nginx && \
 mkdir -p /var/log/nginx && \
@@ -57,7 +68,7 @@ chmod -R ug+rwx /var/log/nginx && \
 chmod -R ug+rwx /var/lib/nginx && \
 chmod -R ug+rwx /opt/app-root && \
 #chmod -R a+rwx /opt/app-root/services.sh \
-#chmod -R a+rwx /opt/app-root
+chmod -R a+rwx /opt/app-root
 chmod -R a+rwx /opt/app-root/services.sh
 
 
@@ -102,6 +113,8 @@ RUN ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
 RUN echo 'instantclient,/usr/local/instantclient' | pecl install -f oci8-2.0.11
 
 RUN echo 'extension=oci8.so' > /etc/php.ini
+RUN echo 'extension=redis.so' > /etc/php.d/redis.ini
+RUN echo 'extension=igbinary.so' > /etc/php.d/igbinary.ini
 
 RUN yum clean all -y
 USER 1001

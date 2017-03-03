@@ -25,18 +25,12 @@ fastcgi_param  SERVER_NAME        $server_name;
 fastcgi_param  REDIRECT_STATUS    200;
 fastcgi_param  SERVER_TYPE	  int;
 fastcgi_param  ROSI_APPL	  $schema;	
-#fastcgi_param  TNS_ADMIN	  /usr/lib/oracle/12.1/client64;
-fastcgi_param  RIS_LOG		  /opt/app-root/src/appl/rosi/log;
-fastcgi_param  ROSI_HOME	  /opt/app-root/src/appl/rosi/rosi-sol;
-fastcgi_param  ROSI_CONF_DIR 	  /opt/app-root/src/appl/rosi/rosi-sol/configure;
+fastcgi_param  TNS_ADMIN	  /usr/lib/oracle/12.1/client64;
+#fastcgi_param  RIS_LOG		  /appl/rosi/log;
+#fastcgi_param  ROSI_HOME	  /appl/rosi/rosi-sol;
+#fastcgi_param  ROSI_CONF_DIR 	  /appl/rosi/rosi-sol/configure;
 fastcgi_param  ROSI_SESSION	  $cookie_phpsessid;
-
-fastcgi_param  ROSI_CODEROOT	  /opt/app-root/src/appl/rosi/rosi-sol;
-fastcgi_param  ROSI_CODEWWWROOT   /opt/app-root/src/appl/rosi/rosi-sol/wwwroot;
-fastcgi_param  SERVER_NAME	  http://appbp-canopycloudification.44fs.preview.openshiftapps.com;
-fastcgi_param  ROSI_URL		  http://appbp-canopycloudification.44fs.preview.openshiftapps.com;
-
-fastcgi_buffers 16 16k;
-fastcgi_buffer_size 32k;
-
+#fastcgi_param  ROSI_CODEROOT      /appl/rosi/rosi-sol;
+#fastcgi_param  ROSI_CODEWWWROOT	  /appl/rosi/rosi-sol/wwwroot;
+#fastcgi_param  ROSI_CONF_DIR	  /appl/rosi/rosi-sol/configure;
 
