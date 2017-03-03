@@ -52,7 +52,7 @@ RUN cp /opt/app-root/etc/conf.d/php-fpm/pools/lm.conf /etc/php-fpm.d/lm.conf
 RUN cp /opt/app-root/etc/conf.d/php-fpm/php.ini /etc/php.d/php.ini
 RUN cp /opt/app-root/etc/conf.d/php-fpm/php-batch.ini /etc/php.d/php-batch.ini
 RUN cp /opt/app-root/etc/conf.d/php/oci8.ini /etc/php.d/30-oci8.ini
-RUN mkdir -p /usr/local/lib/php/extensions/no-debug-non-zts-20131226
+RUN mkdir -p /opt/app-root/src/appl/opkg/lib/php/extensions/no-debug-non-zts-20131226
 RUN mkdir /tmp/sessions && \
 mkdir -p /var/lib/nginx && \
 mkdir -p /var/log/nginx && \
@@ -68,7 +68,7 @@ chmod -R ug+rwx /var/log/nginx && \
 chmod -R ug+rwx /var/lib/nginx && \
 chmod -R ug+rwx /opt/app-root && \
 #chmod -R a+rwx /opt/app-root/services.sh \
-chmod -R a+rwx /opt/app-root
+chmod -R a+rwx /opt/app-root && \
 chmod -R a+rwx /opt/app-root/services.sh
 
 
