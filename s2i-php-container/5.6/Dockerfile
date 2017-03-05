@@ -15,6 +15,7 @@ RUN yum install -y --setopt=tsflags=nodocs --enablerepo=centosplus \
 php56-fpm nginx  
 RUN yum -y install php56w \
 php-adodb \
+php-pecl-pdflib-4.1.1 \
 php56w-pecl-redis-3.1.0 \
 php56w-opcache \
 php56w-common \ 
@@ -72,30 +73,9 @@ chmod -R a+rwx /opt/app-root && \
 chmod -R a+rwx /opt/app-root/services.sh
 
 
-# -----------------------------------------------------------------------------
-# Install Oracle drivers
-#
-# Oracle clients need to be downloaded in oracle path
-# -----------------------------------------------------------------------------
-#RUN mkdir -p /opt/app-root/etc/oracle/11.2/client64/lib/
-#RUN cp /opt/app-root/etc/conf.d/oracle/libclntsh.so.11.1.gz /opt/app-root/etc/oracle/11.2/client64/lib/
-#RUN gunzip /opt/app-root/etc/oracle/11.2/client64/lib/libclntsh.so.11.1.gz
-#RUN cp /opt/app-root/etc/conf.d/oracle/libnnz11.so.gz /opt/app-root/etc/oracle/11.2/client64/lib/
-#RUN gunzip /opt/app-root/etc/oracle/11.2/client64/lib/libnnz11.so.gz
-#RUN cp /opt/app-root/etc/conf.d/oracle/libocci.so.11.1.gz /opt/app-root/etc/oracle/11.2/client64/lib/
-#RUN gunzip /opt/app-root/etc/oracle/11.2/client64/lib/libocci.so.11.1.gz
-#RUN ln -s /opt/app-root/etc/oracle/11.2/client64/lib/libclntsh.so.11.1 /opt/app-root/etc/oracle/11.2/client64/lib/libclntsh.so
-#RUN ln -s /opt/app-root/etc/oracle/11.2/client64/lib/libocci.so.11.1 /opt/app-root/etc/oracle/11.2/client64/lib/libocci.so
-#RUN echo "/opt/app-root/etc/oracle/11.2/client64/lib" > /etc/ld.so.conf.d/oracle.conf
-#RUN ldconfig
-
-#RUN cp /opt/app-root/etc/conf.d/oracle/oci8.so /etc/php-fpm.conf
-#RUN echo "extension=oci8.so" > /etc/php-fpm.d/oci8.ini
-
-#RUN cp /opt/app-root/etc/conf.d/oracle/pdo_oci.so /etc/php-fpm.conf
-#RUN echo "extension=pdo_oci.so" > /etc/php-fpm.d/pdo_oci.ini
 
 # Oracle instantclient
+
 RUN cp /opt/app-root/etc/conf.d/oracle/instantclient-basic-linux.x64-11.2.0.4.0.zip /usr/local/instantclient-basic-linux.x64-11.2.0.4.0.zip
 RUN cp /opt/app-root/etc/conf.d/oracle/instantclient-sdk-linux.x64-11.2.0.4.0.zip /usr/local/instantclient-sdk-linux.x64-11.2.0.4.0.zip
 RUN cp /opt/app-root/etc/conf.d/oracle/instantclient-sqlplus-linux.x64-11.2.0.4.0.zip /usr/local/instantclient-sqlplus-linux.x64-11.2.0.4.0.zip
@@ -112,9 +92,16 @@ RUN ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
 
 RUN echo 'instantclient,/usr/local/instantclient' | pecl install -f oci8-2.0.11
 
-RUN echo 'extension=oci8.so' > /etc/php.d/php.ini
-RUN echo 'extension=redis.so' > /etc/php.d/redis.ini
-RUN echo 'extension=igbinary.so' > /etc/php.d/igbinary.ini
+#Install saprfc
+RUN yum install -y tar
+RUN mkdir -p /etc/saprfc \
+    && curl -SL https://sourceforge.net/projects/saprfc/files/saprfc/1.4.1/saprfc-1.4.1.tar.gz \
+    | tar -xvzf /etc/saprfc \
+    && make -C /etc/saprfc all
+
+#RUN echo 'extension=oci8.so' > /etc/php.d/php.ini
+#RUN echo 'extension=redis.so' > /etc/php.d/redis.ini
+#RUN echo 'extension=igbinary.so' > /etc/php.d/igbinary.ini
 
 RUN yum clean all -y
 USER 1001
