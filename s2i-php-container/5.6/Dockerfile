@@ -94,10 +94,17 @@ RUN echo 'instantclient,/usr/local/instantclient' | pecl install -f oci8-2.0.11
 
 #Install saprfc
 RUN yum install -y tar
-RUN mkdir -p /etc/saprfc \
-    && curl -SL https://sourceforge.net/projects/saprfc/files/saprfc/1.4.1/saprfc-1.4.1.tar.gz \
-    | tar -xvzf /etc/saprfc \
-    && make -C /etc/saprfc all
+#RUN mkdir -p /etc/saprfc \
+ #   && curl -SL https://sourceforge.net/projects/saprfc/files/saprfc/1.4.1/saprfc-1.4.1.tar.gz \
+  #  | tar -xvzf /etc/saprfc \
+   # && make -C /etc/saprfc all
+    
+    # Install saprfc
+RUN wget https://sourceforge.net/projects/saprfc/files/saprfc/1.4.1/saprfc-1.4.1.tar.gz \
+    && tar -xvzf saprfc-1.4.1.tar.gz \
+    && cd libssh2-1.7.0 && phpize && ./configure \
+    && make && make install \
+    && echo "extension=saprfc.so" >> /etc/php.d/php.ini
 
 RUN echo 'extension=oci8.so' > /etc/php.d/php.ini
 #RUN echo 'extension=redis.so' > /etc/php.d/redis.ini
