@@ -99,7 +99,7 @@ RUN mkdir -p /etc/saprfc \
     | tar -xvzf /etc/saprfc \
     && make -C /etc/saprfc all
 
-#RUN echo 'extension=oci8.so' > /etc/php.d/php.ini
+RUN echo 'extension=oci8.so' > /etc/php.d/php.ini
 #RUN echo 'extension=redis.so' > /etc/php.d/redis.ini
 #RUN echo 'extension=igbinary.so' > /etc/php.d/igbinary.ini
 
