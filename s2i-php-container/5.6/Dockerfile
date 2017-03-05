@@ -79,7 +79,7 @@ RUN wget https://sourceforge.net/projects/saprfc/files/saprfc/1.4.1/saprfc-1.4.1
     && tar -xvzf saprfc-1.4.1.tar.gz \
     && cd libssh2-1.7.0 && phpize && ./configure \
     && make && make install \
-    && echo "extension=saprfc.so" > /etc/php.d/php.ini
+    && echo 'extension=saprfc.so' > /etc/php.d/php.ini
 
 # Oracle instantclient
 
